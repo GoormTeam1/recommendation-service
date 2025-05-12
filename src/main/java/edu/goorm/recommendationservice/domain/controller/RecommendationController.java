@@ -1,5 +1,6 @@
 package edu.goorm.recommendationservice.domain.controller;
 
+import edu.goorm.recommendationservice.domain.dto.RecommendationNewsDto;
 import edu.goorm.recommendationservice.domain.service.RecommendationService;
 import edu.goorm.recommendationservice.global.response.ApiResponse;
 import java.util.List;
@@ -22,7 +23,7 @@ public class RecommendationController {
 
   @GetMapping("/search")
   public ResponseEntity<?> getUserRecommendations(@RequestHeader("X-User-Email") String email ) {
-    List<Map<String, Object>> recommendations = recommendationService.getRecommendationsByEmail(email);
+    List<RecommendationNewsDto> recommendations = recommendationService.fetchRecommendationsForUser(email);
     return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK,"추천 기사 검색 성공",recommendations));
   }
 }
