@@ -24,6 +24,17 @@ public class RecommendationController {
   @GetMapping("/search")
   public ResponseEntity<?> getUserRecommendations(@RequestHeader("X-User-Email") String email ) {
     List<RecommendationNewsDto> recommendations = recommendationService.fetchRecommendationsForUser(email);
+
+    if(email == null) {
+      recommendations = recommendationService.fetchDefaultRecommendations();
+    }
     return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK,"추천 기사 검색 성공",recommendations));
+  }
+
+  @GetMapping("/search/default")
+  public ResponseEntity<?> getDefaultRecommendations() {
+    List<RecommendationNewsDto> recommendations =  recommendationService.fetchDefaultRecommendations();
+
+    return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK,"기본 추천 기사 검색 성공",recommendations));
   }
 }

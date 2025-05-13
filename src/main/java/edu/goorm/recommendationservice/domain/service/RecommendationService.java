@@ -49,4 +49,19 @@ public class RecommendationService {
       throw new RuntimeException("Redis에 저장된 추천 목록 JSON 파싱 실패: " + e.getMessage(), e);
     }
   }
+
+  public List<RecommendationNewsDto> fetchDefaultRecommendations() {
+    String key = "recommendation:default";
+
+    String json = redisTemplate.opsForValue().get(key);
+    System.out.println(json);
+    if (json == null || json.isBlank()) {
+      return Collections.emptyList();
+    }
+    List<Long> newsIds = parseNewsIdsFromJson(json);
+    if (newsIds.isEmpty()) {
+      return Collections.emptyList();
+    }
+    return newsClient.getRecommendationNews(newsIds);
+  }
 }
