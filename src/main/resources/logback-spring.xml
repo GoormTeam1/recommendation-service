@@ -6,9 +6,9 @@
 
     <!-- ✅ RecommendationController 로그 파일 (20분 단위처럼 분할) -->
     <appender name="RECOMMENDATIONCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/recommendation-service/recommendationController.log</file>
+        <file>../logs/service/recommendation-service/recommendationController.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/recommendation-service/recommendationController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <fileNamePattern>../logs/service/recommendation-service/recommendationController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
