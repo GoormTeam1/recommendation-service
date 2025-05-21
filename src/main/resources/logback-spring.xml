@@ -4,24 +4,24 @@
     <!-- ✅ Spring Boot 기본 콘솔 스타일 유지 -->
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <!-- ✅ 로그 파일 저장은 따로 설정 -->
+    <!-- ✅ RecommendationController 로그 파일 (20분 단위처럼 분할) -->
     <appender name="RECOMMENDATIONCONTROLLER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/recommendationController.log</file>
+        <file>logs/recommendation-service/recommendationController.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/userController.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>logs/recommendation-service/recommendationController.%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- ✅ 루트 로거는 Console만 유지 (Spring Boot 기본 스타일 자동 적용) -->
+    <!-- ✅ 루트 로거: 콘솔 출력 유지 -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 
-    <!-- ✅ UserController 전용 로그 파일 유지 -->
+    <!-- ✅ RecommendationController 전용 로거 -->
     <logger level="INFO"
       name="edu.goorm.recommendationservice.domain.controller.RecommendationController"
       additivity="false">
@@ -29,4 +29,3 @@
     </logger>
 
 </configuration>
-
