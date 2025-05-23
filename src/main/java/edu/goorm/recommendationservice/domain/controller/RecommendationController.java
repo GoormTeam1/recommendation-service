@@ -19,48 +19,54 @@ public class RecommendationController {
   private final RecommendationService recommendationService;
 
   @GetMapping("/search")
-  public ResponseEntity<?> getUserRecommendations(@RequestHeader(value = "X-User-Email", required = false) String email,
+  public ResponseEntity<?> getUserRecommendations(
+      @RequestHeader(value = "X-User-Email", required = false) String email,
       HttpServletRequest request) {
+
+    long start = System.currentTimeMillis();
     List<RecommendationNewsDto> recommendations;
+    String logType;
+    String payload;
+    String userId;
 
     if (email == null) {
       recommendations = recommendationService.fetchDefaultRecommendations();
-
-      CustomLogger.logRequest(
-          "RECOMMEND_DEFAULT_FALLBACK",
-          "/api/recommendation/search",
-          "GET",
-          null,
-          "{\"reason\": \"no user email provided\"}",
-          request
-      );
+      logType = "RECOMMEND_DEFAULT_FALLBACK";
+      payload = recommendations.toString();
+      userId = null;
     } else {
       recommendations = recommendationService.fetchRecommendationsForUser(email);
-
-      CustomLogger.logRequest(
-          "RECOMMEND_USER",
-          "/api/recommendation/search",
-          "GET",
-          email,
-          null,
-          request
-      );
+      logType = "RECOMMEND_USER";
+      payload = null;
+      userId = email;
     }
+
+    CustomLogger.logRequest(
+        logType,
+        "/api/recommendation/search",
+        "GET",
+        payload,
+        request,
+        200,
+        System.currentTimeMillis() - start
+    );
 
     return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "추천 기사 검색 성공", recommendations));
   }
 
   @GetMapping("/search/default")
   public ResponseEntity<?> getDefaultRecommendations(HttpServletRequest request) {
+    long start = System.currentTimeMillis();
     List<RecommendationNewsDto> recommendations = recommendationService.fetchDefaultRecommendations();
 
     CustomLogger.logRequest(
         "RECOMMEND_DEFAULT",
         "/api/recommendation/search/default",
         "GET",
-        null,
-        null,
-        request
+        recommendations.toString(),
+        request,
+        200,
+        System.currentTimeMillis() - start
     );
 
     return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "기본 추천 기사 검색 성공", recommendations));
