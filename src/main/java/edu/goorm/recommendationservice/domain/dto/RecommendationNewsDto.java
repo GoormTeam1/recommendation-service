@@ -1,5 +1,6 @@
 package edu.goorm.recommendationservice.domain.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,6 @@ public class RecommendationNewsDto {
   private String category;
 
   /** 기사 발행 일시 */
-  private LocalDateTime publishedAt;
+  private LocalDate publishedAt;
 
 }
