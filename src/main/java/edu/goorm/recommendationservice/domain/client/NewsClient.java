@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "news-service", url = "http://localhost:8082")
+@FeignClient(name = "news-service", url = "${news-service.url}")
 public interface NewsClient {
 
   @PostMapping("/api/news/internal/find-news-by-NewsId")
