@@ -2,13 +2,13 @@ server:
   port: 8084
 
 user-service:
-  url: ${USER_URL}
+  url: ${USER_URL_PROD}
 
 news-service:
-  url: ${NEWS_URL}
+  url: ${NEWS_URL_PROD}
 
-  spring:
-    data:
-      redis:
-        host: localhost
-        port: 6379
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379

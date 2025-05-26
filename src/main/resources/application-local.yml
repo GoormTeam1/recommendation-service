@@ -2,10 +2,10 @@ server:
   port: 8084
 
 user-service:
-  url: ${USER_URL}
+  url: ${USER_URL_LOCAL}
 
 news-service:
-  url: ${NEWS_URL}
+  url: ${NEWS_URL_LOCAL}
 
 spring:
   data:
