@@ -4,8 +4,8 @@
 APP_NAME="recommendation-service"
 JAR_NAME="recommendation.jar"
 APP_DIR="/home/ubuntu/backend/$APP_NAME"
-LOG_FILE="$LOG_DIR/$APP_NAME.log"
 LOG_DIR="/home/ubuntu/backend/logs/service/$APP_NAME"
+LOG_FILE="$LOG_DIR/$APP_NAME.log"
 ENV_FILE="$APP_DIR/../.env"
 
 echo "▶ [$APP_NAME] 배포 시작"
