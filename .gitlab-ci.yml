@@ -15,37 +15,46 @@ stages:
 # 3. 서비스에 따라 달라지는 변수들만 여기서 정의
 variables:
   SONAR_PROJECT_KEY: "recommendation-service"         # SonarQube 프로젝트 키는 서비스마다 다름
-  ECR_REPOSITORY_NAME: "newords-recommendation"       # ECR 리포지토리 이름도 서비스마다 다름
-
-# 4. 실제 실행할 작업들은 템플릿을 상속(extends)받아 정의
+  ECR_REPOSITORY_NAME: "newords-recommendation# 4. 실제 실행할 작업들은 템플릿을 상속(extends)받아 정의
 build:
   extends: .build_template
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - deploy-runner
 
 test:
   extends: .test_template
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - deploy-runner
 
 sonarqube-check:
   extends: .sonarqube_template
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - deploy-runner
 
 publish_and_scan_image:
   extends:
     - .publish_template
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - deploy-runner
 
-# --- ★★★ 파이프라인 마지막에 알림 작업 추가 ★★★ ---
 slack-notify-on-success:
   extends: .slack_notify_on_success_template
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - deploy-runner
 
 slack-notify-on-failure:
   extends: .slack_notify_on_failure_template
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+  tags:
+    - deploy-runner
